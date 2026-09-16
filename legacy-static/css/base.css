@@ -1,0 +1,151 @@
+/* ===========================================================
+   MAF · Tokens, reset y utilidades base
+   =========================================================== */
+:root{
+  color-scheme: light;
+
+  /* Superficies y texto */
+  --bg:            #f4f6f8;
+  --surface:       #ffffff;
+  --surface-2:     #f7f9fb;
+  --surface-3:     #edf1f5;
+  --border:        #dce2e9;
+  --border-strong: #c3ccd6;
+  --text:          #131c27;
+  --text-2:        #525f6d;
+  --text-3:        #646d79;  /* 4.6:1 incluso sobre --surface-3, el fondo más claro donde se usa */
+
+  /* Rojo corporativo de MAF. Se usa solo en el logotipo: como acento chocaría
+     con el rojo semántico de mora, rechazo y error, que son estados frecuentes
+     en esta herramienta. */
+  --marca:         #E30521;
+
+  /* Acento */
+  --accent:        #1a4fd6;
+  --accent-hover:  #1741b0;
+  --accent-active: #123590;
+  --accent-soft:   #e8eefc;
+  --accent-border: #c2d2f7;
+
+  /* Semánticos */
+  --ok:        #0b6b45;  --ok-soft:     #e1f3ea;  --ok-border:     #b9e0cd;
+  --warn:      #8a5500;  --warn-soft:   #fdf0d8;  --warn-border:   #efd7a6;
+  --danger:    #b02418;  --danger-soft: #fbe9e7;  --danger-border: #f2c7c2;
+  --info:      #1a4fd6;  --info-soft:   #e8eefc;  --info-border:   #c2d2f7;
+  --muted:     #55616f;  --muted-soft:  #ebeff3;  --muted-border:  #d7dee6;
+
+  /* WhatsApp (simulación de burbujas) */
+  --wa-canvas:  #e9e2d9;
+  --wa-in:      #ffffff;
+  --wa-out:     #d6f5c9;
+  --wa-meta:    #5b6a5a;
+
+  /* Escala de espaciado (4px) */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px; --sp-12: 48px;
+
+  /* Radios y sombras */
+  --radius-sm: 6px;
+  --radius:    8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(17,26,38,.06);
+  --shadow:    0 1px 3px rgba(17,26,38,.08), 0 1px 2px rgba(17,26,38,.04);
+  --shadow-lg: 0 10px 30px rgba(17,26,38,.14);
+
+  /* Tipografía */
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-14: 14px;
+  --fs-16: 16px; --fs-20: 20px; --fs-24: 24px; --fs-32: 32px;
+
+  /* Layout */
+  --sidebar-w: 244px;
+  --topbar-h: 64px;
+  --content-max: 1360px;
+}
+
+*,*::before,*::after{ box-sizing: border-box; }
+
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-14);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img{ max-width:100%; display:block; }
+
+/* Los estilos de autor le ganan al [hidden]{display:none} del navegador.
+   Sin este !important, cualquier regla que declare display (como .modal-root)
+   deja el elemento visible aunque tenga el atributo hidden. */
+[hidden]{ display: none !important; }
+
+h1,h2,h3,h4{ margin:0; font-weight:600; line-height:1.3; letter-spacing:-.01em; }
+h1{ font-size: var(--fs-20); }
+h2{ font-size: var(--fs-16); }
+h3{ font-size: var(--fs-14); }
+p{ margin:0; }
+ul,ol{ margin:0; padding:0; list-style:none; }
+
+a{ color: var(--accent); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+
+button, input, select, textarea{ font: inherit; color: inherit; }
+
+svg{ flex: none; }
+
+/* Foco visible, uniforme en toda la app */
+:where(a,button,input,select,textarea,[tabindex],[role="button"],[role="tab"],[role="option"]):focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link{
+  position: absolute; left: var(--sp-4); top: -60px;
+  z-index: 200;
+  background: var(--surface); color: var(--text);
+  border:1px solid var(--border-strong); border-radius: var(--radius);
+  padding: var(--sp-2) var(--sp-4);
+  box-shadow: var(--shadow-lg);
+  transition: top 160ms ease-out;
+}
+.skip-link:focus{ top: var(--sp-4); text-decoration:none; }
+
+/* Utilidades */
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+.stack{ display:flex; flex-direction:column; }
+.row{ display:flex; align-items:center; }
+.wrap{ flex-wrap:wrap; }
+.gap-1{ gap: var(--sp-1);} .gap-2{ gap: var(--sp-2);} .gap-3{ gap: var(--sp-3);}
+.gap-4{ gap: var(--sp-4);} .gap-6{ gap: var(--sp-6);}
+.grow{ flex:1 1 auto; min-width:0; }
+.right{ margin-left:auto; }
+.tnum{ font-variant-numeric: tabular-nums; }
+.muted{ color: var(--text-2); }
+.dim{ color: var(--text-3); }
+.small{ font-size: var(--fs-12); }
+.strong{ font-weight:600; }
+.nowrap{ white-space: nowrap; }
+.truncate{ display:block; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.mono{ font-variant-numeric: tabular-nums; letter-spacing:.01em; }
+.hide-sm{ display:initial; }
+.center{ text-align:center; }
+.alignr{ text-align:right; }
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
